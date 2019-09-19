@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+int createStateful(char*);
+int createStateless(char*);
 void usage();
 
 int main(int argc, char* argv[])
@@ -22,6 +24,16 @@ int main(int argc, char* argv[])
         }
     }
 
+    return 0;
+}
+
+// Create a stateful widget
+int createStateful(char* name) {
+    return 0;
+}
+
+// Create a stateless widget
+int createStateless(char* name) {
     return 0;
 }
 
