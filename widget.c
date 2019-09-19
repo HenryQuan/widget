@@ -89,5 +89,5 @@ int createStateless(char* name) {
 
 // Print how to use this program
 void usage() {
-    printf("usage: widget [option] [name]\n-f\tcreate a stateful widget\n-l    create a stateless widget (it is 'L' not '1')\n\nhttps://github.com/HenryQuan/widget\n");
+    printf("usage: widget [option] [name]\n-f\tcreate a stateful widget\n-l\tcreate a stateless widget (it is 'L' not '1')\nname\tanything but DO NOT include .dart\n\nhttps://github.com/HenryQuan/widget\n");
 }
