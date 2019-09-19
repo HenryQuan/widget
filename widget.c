@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int exists(char*);
@@ -17,20 +18,27 @@ int main(int argc, char* argv[])
         FILE *widget;
 
         char* option = argv[1];
-        char* filename = argv[2];
+        char* input = argv[2];
+        // Input + .dart
+        char* filename = malloc(sizeof(char) * (strlen(input) + 5));
+        strcpy(filename, input);
+        strcat(filename, ".dart");
         
         if (strcmp(option, "-f") == 0) {
             printf("Creating stateful widget\n");
             if (!exists(filename)) {
                 widget = fopen(filename, "w");
                 fprintf(widget, "import 'package:flutter/material.dart';\n\n");
-                fprintf(widget, "/// %s class\n", filename);
-                fprintf(widget, "class %s extends StatelessWidget {\n\n", filename);
-                fprintf(widget, "   %s({Key key}) : super(key: key);\n\n", filename);
+                fprintf(widget, "/// %s class\n", input);
+                fprintf(widget, "class %s extends StatefulWidget {\n\n", input);
+                fprintf(widget, "   %s({Key key}) : super(key: key);\n\n", input);
+                fprintf(widget, "   @override\n");
+                fprintf(widget, "   _%sState createState() => _%sState();\n\n}\n\n\n", input, input);
+                fprintf(widget, "class _%sState extends State<%s> {\n\n", input, input);
                 fprintf(widget, "   @override\n");
                 fprintf(widget, "   Widget build(BuildContext context) {\n");
                 fprintf(widget, "       return Container();\n");
-                fprintf(widget, "   }\n");
+                fprintf(widget, "   }\n\n");
                 fprintf(widget, "}\n");
                 fclose(widget);
             }
@@ -39,13 +47,13 @@ int main(int argc, char* argv[])
             if (!exists(filename)) {
                 widget = fopen(filename, "w");
                 fprintf(widget, "import 'package:flutter/material.dart';\n\n");
-                fprintf(widget, "/// %s class\n", filename);
-                fprintf(widget, "class %s extends StatelessWidget {\n\n", filename);
-                fprintf(widget, "   %s({Key key}) : super(key: key);\n\n", filename);
+                fprintf(widget, "/// %s class\n", input);
+                fprintf(widget, "class %s extends StatelessWidget {\n\n", input);
+                fprintf(widget, "   %s({Key key}) : super(key: key);\n\n", input);
                 fprintf(widget, "   @override\n");
                 fprintf(widget, "   Widget build(BuildContext context) {\n");
                 fprintf(widget, "       return Container();\n");
-                fprintf(widget, "   }\n");
+                fprintf(widget, "   }\n\n");
                 fprintf(widget, "}\n");
                 fclose(widget);
             }
