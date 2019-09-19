@@ -1,6 +1,7 @@
 # widget
 Create stateful or stateless widgets for flutter
 
+# Usage
 ```
 usage: widget [option] [name]
 -f      create a stateful widget
@@ -8,4 +9,10 @@ usage: widget [option] [name]
 name    anything but DO NOT include .dart
 ```
 
-[rncomponent](https://github.com/HenryQuan/rncomponent) for React Native
+# Compile
+```
+make
+```
+Then, drag `widget` to your bin folder and use it anywhere
+
+Also try [rncomponent](https://github.com/HenryQuan/rncomponent) for React Native
