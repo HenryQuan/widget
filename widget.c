@@ -1,15 +1,25 @@
 #include <stdio.h>
+#include <string.h>
 
 void usage();
 
-int main(int argc, char const *argv[])
+int main(int argc, char* argv[])
 {
     if (argc < 3) {
         // No enough arguments
         usage();
         return 1;
     } else {
-        
+        char* option = argv[1];
+        if (strcmp(option, "-f") == 0) {
+            printf("Creating stateful widget...\n");
+        } else if (strcmp(option, "-l") == 0) {
+            printf("Creating stateless widget...\n");
+        } else {
+            // Invalid option
+            printf("Invalid option!\n");
+            return 1;
+        }
     }
 
     return 0;
