@@ -1,3 +1,10 @@
+///
+// widget.c
+// Create stateful or stateless widgets for flutter
+// 
+// 21/09/2019
+//
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
