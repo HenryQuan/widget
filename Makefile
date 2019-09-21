@@ -5,3 +5,11 @@ test:
 	make
 	./widget -l stateless
 	./widget -f stateful
+	./widget -l example/stateless
+	./widget -f example/stateful
+
+clean:
+	rm stateless.dart
+	rm stateful.dart
+	rm example/stateless.dart
+	rm example/stateful.dart

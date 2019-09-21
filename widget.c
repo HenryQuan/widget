@@ -24,6 +24,8 @@ int main(int argc, char* argv[])
         if (filename == NULL) fatal("Out of memory");
         strcpy(filename, input);
         strcat(filename, ".dart");
+        char* classname = getClassName(input);
+        printf("classname -> %s\n", classname);
         
         if (strcmp(option, "-f") == 0) {
             return createStateful(filename, input);
@@ -31,10 +33,11 @@ int main(int argc, char* argv[])
             return createStateless(filename, input);
         } else {
             // Invalid option
-            printf("Invalid option!\n");
-            return 1;
+            fatal("Invalid option!\n");
         }
     }
+
+    return 0;
 }
 
 // Check if file exists
@@ -63,8 +66,16 @@ char* getClassName(char* input) {
         // This name is valid (so no '/' or '\')
         return input;
     } else {
-        char* name = malloc(sizeof(char) * (length - start));
-        if (name == NULL) fatal("Out of memory");        
+        char* name = malloc(sizeof(char) * (length - start + 1));
+        if (name == NULL) fatal("Out of memory"); 
+
+        // Copy it into name
+        int i = 0;
+        for (int j = start; j < length; j++, i++) {
+            name[i] = input[j - 1];
+        }
+
+        return name;
     }
 }
 
