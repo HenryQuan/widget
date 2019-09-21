@@ -12,32 +12,40 @@ void fatal(char*);
 
 int main(int argc, char* argv[])
 {
+    int returnValue = 0;
+
     if (argc < 3) {
         // No enough arguments
         usage();
-        return 1;
+        returnValue = 1;
     } else {
         char* option = argv[1];
         char* input = argv[2];
         // Input + .dart
         char* filename = malloc(sizeof(char) * (strlen(input) + 5));
         if (filename == NULL) fatal("Out of memory");
+
         strcpy(filename, input);
         strcat(filename, ".dart");
+
         char* classname = getClassName(input);
         printf("classname -> %s\n", classname);
         
         if (strcmp(option, "-f") == 0) {
-            return createStateful(filename, input);
+            returnValue = createStateful(filename, classname);
         } else if (strcmp(option, "-l") == 0) {
-            return createStateless(filename, input);
+            returnValue = createStateless(filename, classname);
         } else {
             // Invalid option
             fatal("Invalid option!\n");
         }
+
+        // Free up memory (other languages have gc...)
+        free(filename);
+        free(classname);
     }
 
-    return 0;
+    return returnValue;
 }
 
 // Check if file exists
@@ -58,7 +66,10 @@ char* getClassName(char* input) {
         // Starting from the last index
         char curr = input[i - 1];
         if (curr == '/' || curr == '\\') {
-            start = i;
+            // It should start from the next character because now it is '/' or '\'
+            start = i + 1;
+            printf("start -> %d\n", start);
+            break;
         }
     }
 
@@ -71,10 +82,12 @@ char* getClassName(char* input) {
 
         // Copy it into name
         int i = 0;
-        for (int j = start; j < length; j++, i++) {
+        for (int j = start; j <= length; j++, i++) {
             name[i] = input[j - 1];
         }
 
+        // Add null
+        name[i] = '\0';
         return name;
     }
 }

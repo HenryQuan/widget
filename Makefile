@@ -9,7 +9,5 @@ test:
 	./widget -f example/stateful
 
 clean:
-	rm stateless.dart
-	rm stateful.dart
-	rm example/stateless.dart
-	rm example/stateful.dart
+	rm *.dart
+	rm example/*.dart
