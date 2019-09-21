@@ -8,6 +8,7 @@ char* getClassName(char*);
 int createStateful(char*, char*);
 int createStateless(char*, char*);
 void usage();
+void fatal(char*);
 
 int main(int argc, char* argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char* argv[])
         char* input = argv[2];
         // Input + .dart
         char* filename = malloc(sizeof(char) * (strlen(input) + 5));
+        if (filename == NULL) fatal("Out of memory");
         strcpy(filename, input);
         strcat(filename, ".dart");
         
@@ -47,7 +49,23 @@ int exists(char* filename) {
 
 // Usually the input is like `HelloWorld` but it is also possible to have `./Henry/HelloWorld` and we need to get `HelloWorld only`
 char* getClassName(char* input) {
-    return NULL;
+    int length = strlen(input);
+    int start = -1;
+    for (int i = length; i > 0; i--) {
+        // Starting from the last index
+        char curr = input[i - 1];
+        if (curr == '/' || curr == '\\') {
+            start = i;
+        }
+    }
+
+    if (start == -1) {
+        // This name is valid (so no '/' or '\')
+        return input;
+    } else {
+        char* name = malloc(sizeof(char) * (length - start));
+        if (name == NULL) fatal("Out of memory");        
+    }
 }
 
 // Create a stateful widget
@@ -102,4 +120,10 @@ int createStateless(char* filename, char* input) {
 // Print how to use this program
 void usage() {
     printf("usage: widget [option] [name]\n-f\tcreate a stateful widget\n-l\tcreate a stateless widget (it is 'L' not '1')\nname\tanything but DO NOT include .dart\n\nhttps://github.com/HenryQuan/widget\n");
+}
+
+// Fatal error
+void fatal(char* msg) {
+    printf("%s\n", msg);
+    exit(EXIT_FAILURE);
 }
