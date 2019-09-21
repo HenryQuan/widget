@@ -2,8 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <ctype.h>
 
 int exists(char*);
+char* getFileName(char*);
 char* getClassName(char*);
 int createStateful(char*, char*);
 int createStateless(char*, char*);
@@ -21,15 +23,11 @@ int main(int argc, char* argv[])
     } else {
         char* option = argv[1];
         char* input = argv[2];
-        // Input + .dart
-        char* filename = malloc(sizeof(char) * (strlen(input) + 5));
-        if (filename == NULL) fatal("Out of memory");
 
-        strcpy(filename, input);
-        strcat(filename, ".dart");
-
+        char* filename = getFileName(input);
         char* classname = getClassName(input);
-        printf("classname -> %s\n", classname);
+        // Make sure the first alphabet is in UPPER CASE
+        classname[0] = toupper(classname[0]);
         
         if (strcmp(option, "-f") == 0) {
             returnValue = createStateful(filename, classname);
@@ -51,11 +49,22 @@ int main(int argc, char* argv[])
 // Check if file exists
 int exists(char* filename) {
     if (access(filename, F_OK) != -1) {
-        printf("%s exists\nNothing was created", filename);
+        printf("%s exists\nNothing was created\n", filename);
         return 1;
     } else {
         return 0;
     }
+}
+
+// Append .dart to input if necessary
+char* getFileName(char* input) {
+    char* name = malloc(sizeof(char) * (strlen(input) + 5));
+    if (name == NULL) fatal("Out of memory");
+
+    strcpy(name, input);
+    strcat(name, ".dart");
+
+    return name;
 }
 
 // Usually the input is like `HelloWorld` but it is also possible to have `./Henry/HelloWorld` and we need to get `HelloWorld only`
@@ -68,7 +77,6 @@ char* getClassName(char* input) {
         if (curr == '/' || curr == '\\') {
             // It should start from the next character because now it is '/' or '\'
             start = i + 1;
-            printf("start -> %d\n", start);
             break;
         }
     }
