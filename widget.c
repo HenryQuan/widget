@@ -122,7 +122,12 @@ int createStateful(char* filename, char* input) {
         fprintf(widget, "class _%sState extends State<%s> {\n\n", input, input);
         fprintf(widget, "   @override\n");
         fprintf(widget, "   Widget build(BuildContext context) {\n");
-        fprintf(widget, "       return Container();\n");
+        fprintf(widget, "       return Scaffold(\n");
+        fprintf(widget, "           appBar: AppBar(\n");
+        fprintf(widget, "               title: Text('%s')\n", input);
+        fprintf(widget, "           ),\n");
+        fprintf(widget, "           body: Container(),\n");
+        fprintf(widget, "       );\n");
         fprintf(widget, "   }\n\n");
         fprintf(widget, "}\n");
         fclose(widget);
@@ -145,7 +150,12 @@ int createStateless(char* filename, char* input) {
         fprintf(widget, "   %s({Key key}) : super(key: key);\n\n", input);
         fprintf(widget, "   @override\n");
         fprintf(widget, "   Widget build(BuildContext context) {\n");
-        fprintf(widget, "       return Container();\n");
+        fprintf(widget, "       return Scaffold(\n");
+        fprintf(widget, "           appBar: AppBar(\n");
+        fprintf(widget, "               title: Text('%s')\n", input);
+        fprintf(widget, "           ),\n");
+        fprintf(widget, "           body: Container(),\n");
+        fprintf(widget, "       );\n");
         fprintf(widget, "   }\n\n");
         fprintf(widget, "}\n");
         fclose(widget);
