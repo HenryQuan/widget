@@ -1,2 +1,4 @@
 *.exe
 *.dart
+widget
+.DS_Store
